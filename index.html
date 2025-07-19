@@ -386,6 +386,14 @@
                     <option value="Aquathlon">Aquathlon</option>
                     <option value="Maratona Aquática">Maratona Aquática</option>
                     <option value="Kids">Kids</option>
+		   <option value="Corrida Noturna">Corrida Noturna</option>
+                   <option value="Corrida">Corrida</option>
+                   <option value="Triathlon Olímpico">Triathlon Olímpico</option>
+                   <option value="Short Triathlon">Short Triathlon</option>
+                   <option value="5K">5K</option>
+                   <option value="10K">10K</option>
+                   <option value="21K">21K</option>
+                   <option value="42K">42K</option>
                 </select>
             </div>
             
@@ -501,6 +509,38 @@
                         <input type="checkbox" id="mod-kids" value="Kids" checked>
                         <label for="mod-kids">Kids</label>
                     </div>
+		    <div class="option-item">
+                        <input type="checkbox" id="mod-cornot" value="Corrida Noturna" checked>
+                        <label for="mod-cornt">Corrida Noturna</label>
+                    </div>
+<div class="option-item">
+                        <input type="checkbox" id="mod-corrida" value="Corrida" checked>
+                        <label for="mod-corrida">Corrida</label>
+                    </div>
+<div class="option-item">
+                        <input type="checkbox" id="mod-triolim" value="Triathlon Olímpico" checked>
+                        <label for="mod-triolim">Triathlon Olímpico</label>
+                    </div>
+<div class="option-item">
+                        <input type="checkbox" id="mod-shorttri" value="Short Triathlon" checked>
+                        <label for="mod-shorttri">Short Triathlon</label>
+                    </div>
+<div class="option-item">
+                        <input type="checkbox" id="mod-5K" value="5K" checked>
+                        <label for="mod-5K">5K</label>
+                    </div>
+<div class="option-item">
+                        <input type="checkbox" id="mod-10K" value="10K" checked>
+                        <label for="mod-10K">10K</label>
+                    </div>
+<div class="option-item">
+                        <input type="checkbox" id="mod-21K" value="21K" checked>
+                        <label for="mod-21K">21K</label>
+                    </div>
+<div class="option-item">
+                        <input type="checkbox" id="mod-42K" value="42K" checked>
+                        <label for="mod-42K">42K</label>
+                    </div>
                 </div>
             </div>
             
@@ -542,6 +582,14 @@
                     <option value="Aquathlon">Aquathlon</option>
                     <option value="Maratona Aquática">Maratona Aquática</option>
                     <option value="Kids">Kids</option>
+		    <option value="Corrida Noturna">Corrida Noturna</option>
+                    <option value="Corrida">Corrida</option>
+                    <option value="Triathlon Olímpico">Triathlon Olímpico</option>
+                    <option value="Short Triathlon">Short Triathlon</option>
+                    <option value="5K">5K</option>
+                    <option value="10K">10K</option>
+                    <option value="21K">21K</option>
+                    <option value="42K">42K</option>
                 </select>
             </div>
             
@@ -1159,7 +1207,7 @@
                 // Marcar as modalidades selecionadas
                 if (raceData.useModalities) {
                     const selectedModalities = raceData.modalities || [
-                        'Fast Triathlon', 'Aquathlon', 'Maratona Aquática', 'Kids'
+                        'Fast Triathlon', 'Aquathlon', 'Maratona Aquática', 'Kids', 'Corrida Noturna', 'Corrida','Triathlon Olímpico', 'Short' 'Triathlon', '5K', '10K', '21K', '42K'
                     ];
                     
                     document.querySelectorAll('#modalities-list input[type="checkbox"]').forEach(checkbox => {
