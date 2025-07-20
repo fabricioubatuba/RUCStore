@@ -1325,45 +1325,47 @@
         
         // Excluir prova
         async function deleteRace() {
-            if (!editingRaceId) return;
-            
-            if (!confirm('Tem certeza que deseja excluir esta prova? Todas as inscrições relacionadas também serão removidas.')) {
-                return;
-            }
-            
-            raceSpinner.style.display = 'block';
-            deleteRaceBtn.disabled = true;
-            
-            try {
-                // Primeiro, excluir todas as inscrições desta prova
-                const registrationsSnapshot = await database.ref('cyclingRegistrations')
-                    .orderByChild('raceId')
-                    .equalTo(editingRaceId)
-                    .once('value');
-                
-                const updates = {};
-                if (registrationsSnapshot.exists()) {
-                    registrationsSnapshot.forEach(child => {
-                        updates[`cyclingRegistrations/${child.key}`] = null;
-                    });
-                }
-                
-                // Depois excluir a prova
-                updates[`cyclingRaces/${editingRaceId}`] = null;
-                
-                await database.ref().update(updates);
-                
-                raceModal.style.display = 'none';
-                alert('Prova e inscrições relacionadas excluídas com sucesso!');
-            } catch (error) {
-                console.error('Erro ao excluir prova:', error);
-                alert('Ocorreu um erro ao excluir a prova. Por favor, tente novamente.');
-            } finally {
-                raceSpinner.style.display = 'none';
-                deleteRaceBtn.disabled = false;
-            }
-        }
-        
+  if (!editingRaceId) {
+    alert("Nenhuma prova selecionada para exclusão!");
+    return;
+  }
+
+  if (!confirm('Tem certeza que deseja excluir esta prova e todas as inscrições relacionadas?')) {
+    return;
+  }
+
+  raceSpinner.style.display = 'block';
+  deleteRaceBtn.disabled = true;
+
+  try {
+    // 1. Primeiro deleta todas as inscrições relacionadas
+    const registrationsRef = database.ref('cyclingRegistrations');
+    const query = registrationsRef.orderByChild('raceId').equalTo(editingRaceId);
+    
+    const snapshot = await query.once('value');
+    const deletePromises = [];
+    
+    snapshot.forEach(child => {
+      deletePromises.push(child.ref.remove());
+    });
+
+    // 2. Espera todas as exclusões de inscrições terminarem
+    await Promise.all(deletePromises);
+    
+    // 3. Depois deleta a prova
+    await database.ref(`cyclingRaces/${editingRaceId}`).remove();
+    
+    alert('Prova e inscrições excluídas com sucesso!');
+    raceModal.style.display = 'none';
+    loadRaces(); // Recarrega a lista
+  } catch (error) {
+    console.error('Erro detalhado:', error);
+    alert('Erro ao excluir: ' + error.message);
+  } finally {
+    raceSpinner.style.display = 'none';
+    deleteRaceBtn.disabled = false;
+  }
+}        
         // Alternar status da prova (aberto/fechado)
         function toggleRaceStatus(raceId, currentStatus) {
             const newStatus = currentStatus === 'open' ? 'closed' : 'open';
